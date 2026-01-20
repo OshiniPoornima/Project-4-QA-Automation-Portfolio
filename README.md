@@ -1,31 +1,97 @@
-# Project 4: QA Automation Portfolio - E2E Purchase Flow
+# Project 4: QA Automation Portfolio - E2E Test Suite
 
 ## 🎯 Project Overview
 
-This project demonstrates **End-to-End (E2E) automated testing** using Playwright and JavaScript. I automated a complete purchase workflow on a demo e-commerce site, including login, product selection, cart verification, checkout, and order completion.
+This project demonstrates **comprehensive End-to-End (E2E) automated testing** using Playwright and JavaScript. I created a complete test suite with **4 different test scenarios** covering positive tests, negative tests, and edge cases for a demo e-commerce application.
+
+This showcases real-world QA skills including test design, assertion implementation, and multi-scenario test coverage.
 
 ## 🛠️ Technologies Used
 
-- **Playwright** (latest stable version)
-- **JavaScript**
+- **Playwright** (latest stable version, 2024-2026)
+- **JavaScript (ES6+)**
 - **Node.js**
-- **CSS Selectors** for element identification
-- **Assertions** for data validation
+- **CSS Selectors** (IDs and classes) for robust element identification
+- **Assertions** for comprehensive data validation
+- **Async/Await** for handling asynchronous operations
 
-## 📋 What This Script Does
+## 📋 Test Suite Coverage
 
-The automated test performs the following steps:
+### **Test 1: Complete Purchase Flow (Positive Test)**
+**File**: `e2e_purchase_flow.js`
 
-1. **Login** - Authenticates user with valid credentials
-2. **Add to Cart** - Selects a specific product (Sauce Labs Backpack)
-3. **Cart Verification** - Navigates to cart and validates the correct item was added using an assertion
-4. **Checkout Form** - Completes all required fields (first name, last name, postal code)
-5. **Purchase Completion** - Finalizes the order and verifies success message
+**Scenario**: User successfully purchases a Sauce Labs Backpack
 
-## 🔑 Key Skills Demonstrated
+**Steps**:
+1. Login with valid credentials
+2. Add Sauce Labs Backpack to cart
+3. Navigate to cart and verify correct item
+4. Complete checkout form
+5. Finalize purchase and verify success message
 
-### 1. **Data Assertions**
-Unlike basic automation that just clicks buttons, this script **validates data** to ensure the UI displays correct information:
+**Key Learning**: Data assertions to validate UI displays correct product information
+
+---
+
+### **Test 2: Different Product Purchase (Positive Test)**
+**File**: `e2e_different_product.js`
+
+**Scenario**: User successfully purchases a Sauce Labs Bike Light
+
+**Steps**:
+1. Login with valid credentials
+2. Add Sauce Labs Bike Light to cart (different product)
+3. Navigate to cart and verify correct different item
+4. Complete checkout form with different user data
+5. Finalize purchase
+
+**Key Learning**: Demonstrates ability to adapt selectors and assertions for different test data
+
+---
+
+### **Test 3: Invalid Login (Negative Test)**
+**File**: `negative_test_invalid_login.js`
+
+**Scenario**: User attempts login with invalid credentials
+
+**Steps**:
+1. Navigate to login page
+2. Enter invalid username and password
+3. Click login button
+4. Verify error message appears
+5. Verify user remains on login page (not authenticated)
+
+**Key Learning**: Testing failure scenarios and security - verifying the app correctly rejects bad credentials
+
+---
+
+### **Test 4: Remove Item from Cart (Destructive Action Test)**
+**File**: `e2e_remove_from_cart.js`
+
+**Scenario**: User adds item to cart, then removes it
+
+**Steps**:
+1. Login with valid credentials
+2. Add item to cart
+3. Navigate to cart and verify item is present
+4. Remove item from cart
+5. Verify cart badge disappears
+6. Verify cart list is empty
+
+**Key Learning**: Testing destructive operations and empty states with multiple assertion checks
+
+---
+
+## 🔑 Key QA Skills Demonstrated
+
+### 1. **Comprehensive Test Coverage**
+- ✅ Positive tests (happy path scenarios)
+- ✅ Negative tests (error handling)
+- ✅ Edge cases (empty states, different data)
+- ✅ Destructive operations (delete/remove)
+
+### 2. **Data Validation with Assertions**
+Every test includes assertions that verify expected vs. actual results:
 ```javascript
 if (itemName === 'Sauce Labs Backpack') {
   console.log('✅ ASSERTION PASSED: Correct item found in cart.');
@@ -34,68 +100,113 @@ if (itemName === 'Sauce Labs Backpack') {
 }
 ```
 
-### 2. **Multi-Page State Management**
-The script handles application state across multiple pages: Login → Inventory → Cart → Checkout → Confirmation
+### 3. **Multiple Verification Points**
+Tests use multiple checks to ensure thorough validation:
+- Cart badge count
+- Item presence in cart list
+- URL verification
+- Error message content
 
-### 3. **Stable Locators**
-Used specific CSS selectors (IDs and classes) that are less likely to break when the UI changes:
-- `#add-to-cart-sauce-labs-backpack` (ID selector)
-- `.shopping_cart_link` (class selector)
-- `.inventory_item_name` (class selector)
+### 4. **Stable, Maintainable Locators**
+Used specific CSS selectors that minimize test brittleness:
+- ID selectors: `#add-to-cart-sauce-labs-backpack`
+- Class selectors: `.shopping_cart_link`
+- Data attributes: `[data-test="error"]`
 
-## 📂 Files in This Repository
+### 5. **Multi-Page State Management**
+Tests handle application state across multiple pages:
+Login → Inventory → Cart → Checkout → Confirmation
 
-- **e2e_purchase_flow.js** - Complete E2E automation script
-- **README.md** - Project documentation (this file)
+---
 
-## 🚀 How to Run This Script
+## 📂 Repository Structure
+```
+Project-4-qa-automation-portfolio/
+│
+├── e2e_purchase_flow.js           # Test 1: Complete purchase
+├── e2e_different_product.js       # Test 2: Different product
+├── negative_test_invalid_login.js # Test 3: Failed login
+├── e2e_remove_from_cart.js        # Test 4: Remove from cart
+└── README.md                       # This documentation
+```
 
-### Using Try Playwright (No Installation Required):
+---
+
+## 🚀 How to Run These Tests
+
+### **Option 1: Try Playwright (No Installation Required)**
 1. Go to https://try.playwright.tech/
-2. Copy the contents of `e2e_purchase_flow.js`
+2. Copy the contents of any `.js` file
 3. Paste into the editor
 4. Click "Run"
-5. Watch the automation execute and check the console for results
+5. Check console for test results
 
-### Using Local Playwright Installation:
+### **Option 2: Local Playwright Installation**
 ```bash
 # Install Playwright
 npm init playwright@latest
 
-# Run the script
+# Run individual tests
 node e2e_purchase_flow.js
+node e2e_different_product.js
+node negative_test_invalid_login.js
+node e2e_remove_from_cart.js
 ```
+
+---
 
 ## ✅ Expected Test Results
 
-When the script runs successfully, you should see:
+### Positive Tests (Tests 1, 2, 4):
 ```
-Item added to cart...
 ✅ ASSERTION PASSED: Correct item found in cart.
 Final Result: Thank you for your order!
 ```
 
+### Negative Test (Test 3):
+```
+✅ ASSERTION PASSED: Error message displayed correctly.
+✅ ASSERTION PASSED: User correctly stayed on login page.
+```
+
+---
+
 ## 🎓 What I Learned
 
-- How to write **robust automated tests** that verify data, not just interactions
-- How to handle **multi-step workflows** in test automation
-- The difference between **passing and failing assertions**
-- How to identify **false negatives** in automated testing
-- Best practices for **selector strategies** to minimize test brittleness
+- How to design a **comprehensive test suite** with multiple scenarios
+- The importance of **negative testing** alongside positive tests
+- How to test **edge cases** like empty states
+- Writing **maintainable assertions** that clearly communicate pass/fail
+- The difference between testing actions vs. testing outcomes
+- Best practices for **test organization** and documentation
+
+---
 
 ## 🔗 Application Under Test
 
 - **URL**: https://www.saucedemo.com/
 - **Purpose**: Demo e-commerce site built specifically for QA practice
-
-## 💼 Why This Matters for QA Roles
-
-This project demonstrates skills that junior QA automation roles require:
-- Writing maintainable automation code
-- Implementing proper test assertions
-- Handling real-world user workflows
-- Understanding test failures vs. passes
+- **Test Users**: standard_user / secret_sauce
 
 ---
 
-**Project completed as part of QA automation skills development.**
+## 💼 Why This Project Matters for QA Roles
+
+This project demonstrates the **complete skill set** junior QA automation roles require:
+
+✅ **Test Design**: Creating multiple test scenarios covering different use cases  
+✅ **Automation Implementation**: Writing clean, maintainable test code  
+✅ **Quality Mindset**: Testing both success and failure paths  
+✅ **Technical Documentation**: Clear explanation of test coverage and approach  
+
+**This is portfolio-ready work that proves I can contribute to a QA team immediately.**
+
+---
+
+## 📧 Contact
+
+Feel free to explore the code and reach out with questions!
+
+---
+
+**Project completed as part of comprehensive QA automation skills development.**
